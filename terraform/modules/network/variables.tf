@@ -15,10 +15,14 @@ variable "resource_group_name" {
 
 variable "address_space" {
   description = "Address Space"
+
+  type = list(string)
   type        = list(string)
 }
 
 variable "tags" {
   description = "Resource Tags"
+
+  type = map(string)
   type        = map(string)
 }

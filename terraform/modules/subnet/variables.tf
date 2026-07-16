@@ -9,6 +9,7 @@ variable "virtual_network_name" {
 }
 
 variable "subnets" {
+  description = "Map of subnets"
 
   description = "Subnet configuration"
 

@@ -89,3 +89,16 @@ module "application_insights" {
 
   tags = var.tags
 }
+
+module "key_vault" {
+
+  source = "../../modules/key-vault"
+
+  key_vault_name      = var.key_vault_name
+  resource_group_name = module.resource_group.resource_group_name
+  location            = var.location
+
+  tenant_id = var.tenant_id
+
+  tags = var.tags
+}

@@ -68,3 +68,11 @@ variable "retention_in_days" {
 variable "app_insights_name" {
   type = string
 }
+
+variable "key_vault_name" {
+  type = string
+}
+
+variable "tenant_id" {
+  type = string
+}

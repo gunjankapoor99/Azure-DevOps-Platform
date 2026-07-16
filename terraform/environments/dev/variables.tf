@@ -25,3 +25,16 @@ variable "address_space" {
 
   type = list(string)
 }
+
+
+variable "subnets" {
+
+  description = "Subnet Configuration"
+
+  type = map(object({
+
+    address_prefix = string
+
+  }))
+
+}

@@ -17,3 +17,16 @@ module "network" {
 
   tags = var.tags
 }
+
+
+module "subnet" {
+
+  source = "../../modules/subnet"
+
+  resource_group_name = module.resource_group.resource_group_name
+
+  virtual_network_name = module.network.vnet_name
+
+  subnets = var.subnets
+
+}

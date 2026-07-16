@@ -14,15 +14,11 @@ variable "resource_group_name" {
 }
 
 variable "address_space" {
-  description = "Address Space"
-
-  type = list(string)
+  description = "VNet Address Space"
   type        = list(string)
 }
 
 variable "tags" {
-  description = "Resource Tags"
-
-  type = map(string)
+  description = "Tags"
   type        = map(string)
 }

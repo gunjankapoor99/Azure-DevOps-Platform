@@ -30,3 +30,23 @@ module "subnet" {
   subnets = var.subnets
 
 }
+
+
+module "network_security_group" {
+
+  source = "../../modules/nsg"
+
+  nsg_name            = var.nsg_name
+  location            = var.location
+  resource_group_name = module.resource_group.resource_group_name
+  tags                = var.tags
+}
+
+#module "nsg_association" {
+
+#  source = "../../modules/nsg-association"
+
+#  subnet_id = module.subnet.subnet_ids["aks"]
+
+#  network_security_group_id = module.network_security_group.nsg_id
+#}

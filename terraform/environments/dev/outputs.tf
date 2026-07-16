@@ -27,3 +27,11 @@ output "acr_name" {
 output "acr_login_server" {
   value = module.acr.login_server
 }
+
+output "workspace_name" {
+  value = module.log_analytics.workspace_name
+}
+
+output "workspace_id" {
+  value = module.log_analytics.workspace_id
+}

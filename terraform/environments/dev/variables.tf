@@ -47,3 +47,6 @@ variable "acr_sku" {
   type    = string
   default = "Basic"
 }
+variable "nsg_name" {
+  type = string
+}

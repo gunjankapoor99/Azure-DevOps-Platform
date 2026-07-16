@@ -19,3 +19,11 @@ output "subnet_ids" {
   value = module.subnet.subnet_ids
 
 }
+
+output "acr_name" {
+  value = module.acr.acr_name
+}
+
+output "acr_login_server" {
+  value = module.acr.login_server
+}

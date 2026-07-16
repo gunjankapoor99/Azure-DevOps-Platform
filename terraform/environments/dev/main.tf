@@ -31,6 +31,16 @@ module "subnet" {
 
 }
 
+module "acr" {
+
+  source = "../../modules/acr"
+
+  acr_name            = var.acr_name
+  resource_group_name = module.resource_group.resource_group_name
+  location            = var.location
+  sku                 = var.acr_sku
+  tags                = var.tags
+}
 
 module "network_security_group" {
 

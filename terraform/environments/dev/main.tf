@@ -60,3 +60,18 @@ module "network_security_group" {
 
 #  network_security_group_id = module.network_security_group.nsg_id
 #}
+
+
+module "log_analytics" {
+
+  source = "../../modules/log-analytics"
+
+  workspace_name      = var.workspace_name
+  resource_group_name = module.resource_group.resource_group_name
+  location            = var.location
+
+  sku               = var.workspace_sku
+  retention_in_days = var.retention_in_days
+
+  tags = var.tags
+}

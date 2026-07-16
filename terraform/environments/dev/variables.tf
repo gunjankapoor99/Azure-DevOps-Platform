@@ -64,3 +64,7 @@ variable "retention_in_days" {
   type    = number
   default = 30
 }
+
+variable "app_insights_name" {
+  type = string
+}

@@ -75,3 +75,17 @@ module "log_analytics" {
 
   tags = var.tags
 }
+
+
+module "application_insights" {
+
+  source = "../../modules/application-insights"
+
+  app_insights_name   = var.app_insights_name
+  resource_group_name = module.resource_group.resource_group_name
+  location            = var.location
+
+  workspace_id = module.log_analytics.workspace_id
+
+  tags = var.tags
+}

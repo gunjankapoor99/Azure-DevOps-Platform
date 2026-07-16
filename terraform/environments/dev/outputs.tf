@@ -35,3 +35,8 @@ output "workspace_name" {
 output "workspace_id" {
   value = module.log_analytics.workspace_id
 }
+
+
+output "application_insights_name" {
+  value = module.application_insights.application_insights_name
+}

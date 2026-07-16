@@ -13,3 +13,32 @@ variable "tags" {
 
   type = map(string)
 }
+
+
+variable "vnet_name" {
+  description = "Virtual Network Name"
+  type        = string
+}
+
+variable "address_space" {
+  description = "Address Space"
+
+  type = list(string)
+}
+
+
+variable "subnets" {
+
+  description = "Subnet Configuration"
+
+  type = map(object({
+
+    address_prefix = string
+
+  }))
+
+}
+
+variable "nsg_name" {
+  type = string
+}

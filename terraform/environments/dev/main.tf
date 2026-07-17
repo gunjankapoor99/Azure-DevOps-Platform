@@ -52,6 +52,28 @@ module "network_security_group" {
   tags                = var.tags
 }
 
+module "aks" {
+
+  source = "../../modules/aks"
+
+  aks_name            = var.aks_name
+  location            = var.location
+  resource_group_name = module.resource_group.resource_group_name
+
+  dns_prefix = var.dns_prefix
+
+  kubernetes_version = var.kubernetes_version
+
+  node_count = var.node_count
+
+  vm_size = var.vm_size
+
+  subnet_id = module.subnet.subnet_ids["aks"]
+
+  log_analytics_workspace_id = module.log_analytics.workspace_id
+
+  tags = var.tags
+}
 #module "nsg_association" {
 
 #  source = "../../modules/nsg-association"

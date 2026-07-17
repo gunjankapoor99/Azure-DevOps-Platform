@@ -40,3 +40,11 @@ output "workspace_id" {
 output "application_insights_name" {
   value = module.application_insights.application_insights_name
 }
+
+output "key_vault_name" {
+  value = module.key_vault.key_vault_name
+}
+
+output "key_vault_uri" {
+  value = module.key_vault.vault_uri
+}

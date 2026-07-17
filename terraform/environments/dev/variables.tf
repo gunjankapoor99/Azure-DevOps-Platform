@@ -76,3 +76,28 @@ variable "key_vault_name" {
 variable "tenant_id" {
   type = string
 }
+
+variable "aks_name" {
+  description = "AKS Cluster Name"
+  type        = string
+}
+
+variable "dns_prefix" {
+  description = "DNS Prefix"
+  type        = string
+}
+
+variable "kubernetes_version" {
+  description = "AKS Kubernetes Version"
+  type        = string
+}
+
+variable "node_count" {
+  description = "Default Node Count"
+  type        = number
+}
+
+variable "vm_size" {
+  description = "AKS Node VM Size"
+  type        = string
+}

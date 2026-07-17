@@ -48,3 +48,11 @@ output "key_vault_name" {
 output "key_vault_uri" {
   value = module.key_vault.vault_uri
 }
+
+output "aks_name" {
+  value = module.aks.aks_name
+}
+
+output "aks_id" {
+  value = module.aks.aks_id
+}

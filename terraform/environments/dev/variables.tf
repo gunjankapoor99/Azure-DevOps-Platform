@@ -50,3 +50,29 @@ variable "acr_sku" {
 variable "nsg_name" {
   type = string
 }
+
+variable "workspace_name" {
+  type = string
+}
+
+variable "workspace_sku" {
+  type    = string
+  default = "PerGB2018"
+}
+
+variable "retention_in_days" {
+  type    = number
+  default = 30
+}
+
+variable "app_insights_name" {
+  type = string
+}
+
+variable "key_vault_name" {
+  type = string
+}
+
+variable "tenant_id" {
+  type = string
+}

@@ -60,3 +60,45 @@ module "network_security_group" {
 
 #  network_security_group_id = module.network_security_group.nsg_id
 #}
+
+
+module "log_analytics" {
+
+  source = "../../modules/log-analytics"
+
+  workspace_name      = var.workspace_name
+  resource_group_name = module.resource_group.resource_group_name
+  location            = var.location
+
+  sku               = var.workspace_sku
+  retention_in_days = var.retention_in_days
+
+  tags = var.tags
+}
+
+
+module "application_insights" {
+
+  source = "../../modules/application-insights"
+
+  app_insights_name   = var.app_insights_name
+  resource_group_name = module.resource_group.resource_group_name
+  location            = var.location
+
+  workspace_id = module.log_analytics.workspace_id
+
+  tags = var.tags
+}
+
+module "key_vault" {
+
+  source = "../../modules/key-vault"
+
+  key_vault_name      = var.key_vault_name
+  resource_group_name = module.resource_group.resource_group_name
+  location            = var.location
+
+  tenant_id = var.tenant_id
+
+  tags = var.tags
+}

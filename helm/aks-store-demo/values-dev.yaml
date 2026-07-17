@@ -66,13 +66,13 @@ storeAdmin:
   image:
     repository: "ghcr.io/azure-samples/aks-store-demo/store-admin"
     tag: "" # defaults to Chart.AppVersion
-  serviceType: LoadBalancer
+  serviceType: ClusterIP
 
 storeFront:
   image:
     repository: "ghcr.io/azure-samples/aks-store-demo/store-front"
     tag: "" # defaults to Chart.AppVersion
-  serviceType: LoadBalancer
+  serviceType: ClusterIP
 
 virtualCustomer:
   create: false

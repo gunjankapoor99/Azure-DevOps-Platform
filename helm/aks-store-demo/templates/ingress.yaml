@@ -8,44 +8,56 @@ metadata:
     cert-manager.io/cluster-issuer: selfsigned-clusterissuer
 
     nginx.ingress.kubernetes.io/ssl-redirect: "true"
-
     nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
 
     nginx.ingress.kubernetes.io/rewrite-target: /
+
+    nginx.ingress.kubernetes.io/proxy-body-size: "20m"
+
+    nginx.ingress.kubernetes.io/limit-rps: "20"
+    nginx.ingress.kubernetes.io/limit-connections: "20"
+    nginx.ingress.kubernetes.io/limit-burst-multiplier: "3"
+
+    nginx.ingress.kubernetes.io/enable-cors: "true"
+    nginx.ingress.kubernetes.io/cors-allow-origin: "*"
+    nginx.ingress.kubernetes.io/cors-allow-methods: "GET, PUT, POST, DELETE, OPTIONS"
+    nginx.ingress.kubernetes.io/cors-allow-headers: "Authorization, Content-Type"
+
+    nginx.ingress.kubernetes.io/server-snippet: |
+      add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+      add_header X-Frame-Options "SAMEORIGIN" always;
+      add_header X-Content-Type-Options "nosniff" always;
+      add_header Referrer-Policy "strict-origin-when-cross-origin" always;
+      add_header X-XSS-Protection "1; mode=block" always;
 
 spec:
   ingressClassName: nginx
 
   tls:
-  - hosts:
-      - store.aks.local
-      - admin.aks.local
-    secretName: aks-store-tls
+    - hosts:
+        - store.aks.local
+        - admin.aks.local
+      secretName: aks-store-tls
 
   rules:
+    - host: store.aks.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: store-front
+                port:
+                  number: 80
 
-  - host: store.aks.local
-    http:
-      paths:
-
-      - path: /
-        pathType: Prefix
-
-        backend:
-          service:
-            name: store-front
-            port:
-              number: 80
-
-  - host: admin.aks.local
-    http:
-      paths:
-
-      - path: /
-        pathType: Prefix
-
-        backend:
-          service:
-            name: store-admin
-            port:
-              number: 80
+    - host: admin.aks.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: store-admin
+                port:
+                  number: 80

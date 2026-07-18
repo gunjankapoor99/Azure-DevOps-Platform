@@ -106,3 +106,15 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+ingress:
+  enabled: true
+  className: nginx
+
+  hosts:
+    frontend: store.aks.local
+    admin: admin.aks.local
+
+  tls:
+    enabled: true
+    secretName: aks-store-tls

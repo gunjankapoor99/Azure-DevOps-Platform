@@ -3,8 +3,14 @@ kind: Ingress
 metadata:
   name: aks-store-ingress
   namespace: demo
+  annotations:
+    cert-manager.io/cluster-issuer: selfsigned-issuer
 spec:
   ingressClassName: nginx
+  tls:
+    - hosts:
+        - aks-store.local
+      secretName: aks-store-tls
 
   rules:
   - http:

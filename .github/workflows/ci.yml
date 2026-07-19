@@ -14,13 +14,10 @@ env:
   IMAGE_NAME: aks-store-demo
 
 jobs:
-
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-
       - name: Checkout Repository
         uses: actions/checkout@v4
 
@@ -32,10 +29,19 @@ jobs:
           subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Login to Azure Container Registry
-        run: |
-          az acr login --name $ACR_NAME
+        run: az acr login --name $ACR_NAME
 
-      - name: Verify Azure Login
+      - name: Build Docker Image
         run: |
-          az account show
-          az acr list -o table
+          docker build -t $ACR_NAME.azurecr.io/$IMAGE_NAME:latest ./aks-store-demo/src/store-front
+
+      - name: Push Docker Image
+        run: |
+          docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:latest
+
+      - name: Verify Image in ACR
+        run: |
+          az acr repository show-tags \
+            --name $ACR_NAME \
+            --repository $IMAGE_NAME \
+            -o table

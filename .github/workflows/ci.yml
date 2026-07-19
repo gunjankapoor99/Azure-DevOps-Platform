@@ -1,4 +1,4 @@
-name: Build and Push to ACR
+name: Build and Push Images
 
 on:
   push:
@@ -7,41 +7,47 @@ on:
 
 permissions:
   id-token: write
-  contents: read
+  contents: write
 
 env:
   ACR_NAME: ${{ secrets.ACR_NAME }}
-  IMAGE_NAME: aks-store-demo
 
 jobs:
+
   build:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
 
-      - name: Azure Login
-        uses: azure/login@v2.3.0
-        with:
-          client-id: ${{ secrets.AZURE_CLIENT_ID }}
-          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
-          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+    - name: Checkout Platform Repository
+      uses: actions/checkout@v4
 
-      - name: Login to Azure Container Registry
-        run: az acr login --name $ACR_NAME
+    - name: Checkout Microsoft AKS Store Demo
+      uses: actions/checkout@v4
+      with:
+        repository: Azure-Samples/aks-store-demo
+        path: app
 
-      - name: Build Docker Image
-        run: |
-          docker build -t $ACR_NAME.azurecr.io/$IMAGE_NAME:latest ./aks-store-demo/src/store-front
+    - name: Verify folders
+      run: |
+        pwd
+        ls
+        ls app
+        ls app/src
 
-      - name: Push Docker Image
-        run: |
-          docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:latest
+    - name: Azure Login
+      uses: azure/login@v2
+      with:
+        client-id: ${{ secrets.AZURE_CLIENT_ID }}
+        tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+        subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-      - name: Verify Image in ACR
-        run: |
-          az acr repository show-tags \
-            --name $ACR_NAME \
-            --repository $IMAGE_NAME \
-            -o table
+    - name: Login to ACR
+      run: |
+        az acr login --name $ACR_NAME
+
+    - name: Verify Azure Login
+      run: |
+        az account show
+        az acr list -o table

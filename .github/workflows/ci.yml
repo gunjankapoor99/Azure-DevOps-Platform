@@ -1,4 +1,4 @@
-name: Build and Push Images
+name: Build and Push to ACR
 
 on:
   push:
@@ -7,10 +7,11 @@ on:
 
 permissions:
   id-token: write
-  contents: write
+  contents: read
 
 env:
   ACR_NAME: ${{ secrets.ACR_NAME }}
+  IMAGE_NAME: aks-store-demo
 
 jobs:
 
@@ -20,21 +21,8 @@ jobs:
 
     steps:
 
-    - name: Checkout Platform Repository
+    - name: Checkout Repository
       uses: actions/checkout@v4
-
-    - name: Checkout Microsoft AKS Store Demo
-      uses: actions/checkout@v4
-      with:
-        repository: Azure-Samples/aks-store-demo
-        path: app
-
-    - name: Verify folders
-      run: |
-        pwd
-        ls
-        ls app
-        ls app/src
 
     - name: Azure Login
       uses: azure/login@v2
@@ -43,7 +31,7 @@ jobs:
         tenant-id: ${{ secrets.AZURE_TENANT_ID }}
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
-    - name: Login to ACR
+    - name: Login to Azure Container Registry
       run: |
         az acr login --name $ACR_NAME
 
@@ -51,3 +39,24 @@ jobs:
       run: |
         az account show
         az acr list -o table
+
+    - name: Build Docker Image
+      run: |
+        docker build \
+          -t $ACR_NAME.azurecr.io/$IMAGE_NAME:latest \
+          ./helm/aks-store-demo/src/store-front
+
+    - name: Push Docker Image
+      run: |
+        docker push $ACR_NAME.azurecr.io/$IMAGE_NAME:latest
+
+    - name: Verify Image Exists
+      run: |
+        az acr repository list \
+          --name $ACR_NAME \
+          -o table
+
+        az acr repository show-tags \
+          --name $ACR_NAME \
+          --repository $IMAGE_NAME \
+          -o table

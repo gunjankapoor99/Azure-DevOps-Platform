@@ -50,3 +50,54 @@ variable "acr_sku" {
 variable "nsg_name" {
   type = string
 }
+
+variable "workspace_name" {
+  type = string
+}
+
+variable "workspace_sku" {
+  type    = string
+  default = "PerGB2018"
+}
+
+variable "retention_in_days" {
+  type    = number
+  default = 30
+}
+
+variable "app_insights_name" {
+  type = string
+}
+
+variable "key_vault_name" {
+  type = string
+}
+
+variable "tenant_id" {
+  type = string
+}
+
+variable "aks_name" {
+  description = "AKS Cluster Name"
+  type        = string
+}
+
+variable "dns_prefix" {
+  description = "DNS Prefix"
+  type        = string
+}
+
+variable "kubernetes_version" {
+  description = "AKS Kubernetes Version"
+  type        = string
+}
+
+variable "node_count" {
+  description = "Default Node Count"
+  type        = number
+}
+
+variable "vm_size" {
+  description = "AKS Node VM Size"
+  type        = string
+}

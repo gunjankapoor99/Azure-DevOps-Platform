@@ -27,3 +27,32 @@ output "acr_name" {
 output "acr_login_server" {
   value = module.acr.login_server
 }
+
+output "workspace_name" {
+  value = module.log_analytics.workspace_name
+}
+
+output "workspace_id" {
+  value = module.log_analytics.workspace_id
+}
+
+
+output "application_insights_name" {
+  value = module.application_insights.application_insights_name
+}
+
+output "key_vault_name" {
+  value = module.key_vault.key_vault_name
+}
+
+output "key_vault_uri" {
+  value = module.key_vault.vault_uri
+}
+
+output "aks_name" {
+  value = module.aks.aks_name
+}
+
+output "aks_id" {
+  value = module.aks.aks_id
+}
